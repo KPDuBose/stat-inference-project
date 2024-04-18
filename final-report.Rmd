@@ -18,6 +18,10 @@ options(digits = 4)
 
 # Likelihood ratio tests in linear mixed models with one variance component
 
+Crainiceanu and Ruppert (2004) derived the finite sample distribution of the LRT and RLRT statistics for testing the null hypothesis that the variance component is 0 in a linear mixed model (LMM) with one variance component. 
+They also derived the asymptotic distribution of the LRT and RLRT statistics under the null with weak assumptions on eigenvalues of certain design matrices.
+The assumptions are different from the restrictive assumptions by Self and Liang (1987), that the response variable vector can be partitioned into independent and identically distributed (i.i.d.) subvectors and the number of independent subvectors tends to $\infty$. The downside of using the restrictive assumptions is that the result would not hold for a fixed number of subjects, even if the number of observations per subject increased to $\infty$.
+
 Consider an LMM with one variance component
 
 $$
