@@ -2,6 +2,7 @@
 # installpackages("RSpectra")
 # devtools::install_github("variani/lme4qtl")
 # installpackages("pbmcapply")
+
 pkgs <- c('dplyr',
           'Matrix',
           'tictoc',
@@ -9,10 +10,10 @@ pkgs <- c('dplyr',
           'parallel',
           'lme4qtl',
           'lme4',
-          'datatable',
+          'data.table',
           'pbmcapply')
-invisible(sapply(pkgs, library, characteronly = TRUE))
-`%+%` <- function() paste0()
+invisible(sapply(pkgs, library, character.only = TRUE))
+`%+%` <- function(...) paste0(...)
 ##
 ## Set global parameters ####
 
@@ -82,17 +83,13 @@ samps_exact <- 10000
 cores_exact <- 1
 
 ### Number of simulations ####
-nsim <- 10000
+nsim <- 100
 
 ### Number of cores for simulation ####
 cores_sim <- 1
 
 ### Statistics to calculate ####
-statistics <- c('LRT',
-                'RLRT',
-                'Q',
-                'Qtilde',
-                'Fstat')
+statistics <- c('LRT', 'RLRT')# 'Q', 'Qtilde', 'Fstat')
 
 ### Fit linear model ####
 ##-- X does NOT include the intercept, one is automatically added
@@ -464,7 +461,7 @@ sims <- function(name,
                  s2E,
                  h2,
                  beta,
-                 statistics,
+                 statistics = statistics,
                  samps_exact,
                  cores_exact,
                  alphas) {
