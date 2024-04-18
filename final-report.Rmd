@@ -1,0 +1,52 @@
+---
+title: "Untitled"
+subtitle: "PHS 7010 Fall 2023 - Final Report"
+geometry: margin=3cm
+output: 
+  pdf_document:
+    number_sections: true
+author: "Kline Dubose, Haojia Li"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F,warning = F, message = F, cache = F)
+options(knitr.kable.NA = "")
+options(digits = 4)
+```
+
+# Likelihood ratio tests in linear mixed models with one variance component
+
+Consider an LMM with one variance component
+
+$$
+\mathbf{Y} = X\mathbf{\beta} + Z\mathbf{b} + \epsilon,\
+E\left(\begin{array}{c}\mathbf{b}\\\epsilon\end{array}\right) =
+\left(\begin{array}{c}\mathbf{0}_K\\\mathbf{0}_n\end{array}\right),\
+\text{cov}\left(\begin{array}{c}\mathbf{b}\\\epsilon\end{array}\right) = 
+\left(\begin{array}{cc}\sigma_b^2 \Sigma & \mathbf{0}\\\mathbf{0} & \sigma_{\epsilon}^2 I_n\end{array}\right)
+$$
+
+where,
+
+- $\mathbf{Y}$ is the $n \times 1$ vector of observations,
+- $X$ is the $n \times p$ design matrix for the fixed effects,
+- $Z$ is the $n \times K$ design matrix for the random effects,
+- $\beta$ is a $p$-dimensional vector of fixed effects parameters,
+- $\mathbf{b}$ is a $K$-dimensional vector of random effects,
+- $(\mathbf{b}, \epsilon)$ has a normal distribution.
+
+Under these conditions it follows that
+
+$$
+\begin{aligned}
+E(\mathbf{Y}) &= X\mathbf{\beta},\\
+\text{var}(\mathbf{Y}) &= \sigma_{\epsilon}^2 V_{\lambda}
+\end{aligned}
+$$
+
+where
+
+- $\lambda = \sigma_b^2 / \sigma_{\epsilon}^2$, which can be considered a signal-to-noise ratio,
+- $V_{\lambda} = I_n + \lambda Z\Sigma Z'$.
