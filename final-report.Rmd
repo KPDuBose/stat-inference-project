@@ -54,3 +54,79 @@ where
 
 - $\lambda = \sigma_b^2 / \sigma_{\epsilon}^2$, which can be considered a signal-to-noise ratio,
 - $V_{\lambda} = I_n + \lambda Z\Sigma Z'$.
+
+
+
+
+# Proofs of Lemma 3, Theorem 1, and Corollary 1
+
+Before we begin, in this scenario, our null hypothesis is $\lambda = 0$ where $\lambda$ is the effect size of familial relatedness (FR) and the alternative is $\lambda > 0$.
+
+## Lemma 3
+
+Suppose that $sup_{s \in \Omega_0}\{\rho_s\} \le B$ are bounded. Under the null hypothesis, (i) both $F_n(\lambda)$ and $G_n(\lambda)$ uniformly converge in probability to $F_0(\lambda) = \sum_{j=0}^m q_j \log(w_j) - \log(\sum_{j=0}^m q_j w_j$ over $\lambda \in [-\delta, T]$ for any $0 < \delta < \frac{1}{B \vee max_j\{ \phi_j\}}$ and $0 < T < +\infty$; (ii) $F_0(\lambda)$ achieves its unique maximum at $\lambda = 0$; (iii) $\hat \lambda_n \rightarrow^p 0$ and $\hat \lambda^r_n \rightarrow^p 0$.
+
+i) Essentially we will be showing that:
+
+$$
+\begin{split}
+F_n(\lambda) \rightarrow^p F_0(\lambda) \\
+G_n(\lambda) \rightarrow^p F_0(\lambda)
+\end{split}
+$$
+
+where:
+
+$$
+F_0(\lambda) = \sum_{j=0}^m \log(w_j) - \log\left(\sum_{j=0}^m q_j w_j\right)
+$$
+
+Additionally, note that $\phi_j$ is the set of all distictive non-zero eigenvalues of the FR correlation matrix. 
+
+Let's start with rewriting $F_n(\lambda)$:
+
+$$
+\begin{split}
+F_n(\lambda) & = \log \left( \frac{\sum_{i=1}^{n-p} u_i^2}{\sum_{j=0}^m f'_j w_j U_j + \sum_{s \in \Omega_0} v_s u_s^2} \right) + \frac{1}{n} \sum_{j=1}^m f_j \log (w_j) \\
+& = \log \left(\frac{n-p}{n-p} \cdot \frac{\sum_{i=1}^{n-p} u_i^2}{\sum_{j=0}^m f'_j w_j U_j + \sum_{s \in \omega_0} v_s u_s^2} \right) + \frac{1}{n} \sum_{j=1}^m f_j \log (w_j) \\
+& = \log\left( \frac{1}{n-p} \sum_{i=1}^{n-p} u_i^2 \right) - \log\left( \frac{\sum_{j=0}^m f'_j w_j U_j}{n-p} + \frac{\sum_{s \in \Omega_0}v_s u_s^2}{n-p}  \right) + \frac 1 n \sum_{j=1}^m f_j \log(w_j) 
+\end{split}
+$$
+
+Looking at the first term, let's note that $u_i \sim N(0,1)$ for $i = 1, ..., n-p$. 
+This allows us to rewrite the first term and note that:
+
+$$
+\begin{split}
+\frac{1}{n-p} \sum_{i=1}^{n-p} u_i^2 = \frac{1}{n-p} \sum_{i=1}^{n-p} (u_i - 0)^2 = S_u  & \rightarrow^p \sigma_u = 1 \\
+\frac{1}{n-p} \sum_{i=1}^{n-p} u_i^2 & \rightarrow^p 1
+\end{split}
+$$
+
+by the week law of large numbers. 
+
+$$
+\Rightarrow \log\left( \frac{1}{n-p} \sum_{i=1}^{n-p} u_i^2 \right) \rightarrow ^p \log(1) = 0
+$$
+
+Looking at the second term:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
