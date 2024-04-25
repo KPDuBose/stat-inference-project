@@ -160,10 +160,23 @@ $$
 
 Similar to the second element, the supremum of the third element should converge to 0. Using the continuous mapping theorem, $\sup_{\lambda \in [-\delta, T]} |F_n(\lambda) - F_0(\lambda)| \rightarrow^p 0$. Therefore, $F_n(\lambda)$ converges uniformly to $F_0(\lambda)$ over the interval $\lambda \in [-\delta, T]$.
 
+Let's now look $G_n(\lambda)$. Let's start by rewriting $G_n(\lambda)$:
 
+$$
+\begin{split}
+G_n(\lambda) & = \log\left( \frac{\sum_{i=1}^{n-p}u_i^2}{\sum_{j=0}^m f'_j w_j U_j + \sum_{s\in \Omega_0}v_s u_s^2} \right) + \frac{1}{n-p}\sum_{j=1}^m f'_j \log(w_j) + \frac{1}{n-p} \sum_{s\in\Omega_0}\log(v_s) \\
+& = \log\left( \frac{n-p}{n-p} \cdot \frac{\sum_{i=1}^{n-p}u_i^2}{\sum_{j=0}^m f'_j w_j U_j + \sum_{s\in \Omega_0}v_s u_s^2} \right) + \frac{1}{n-p} \sum_{j=1}^m f'_j \log(w_j) + \frac{1}{n-p}\sum_{s\in\Omega_0}\log(v_s) \\
+& = \log\left(\frac{1}{n-p}\sum_{j=1}^{n-p}u_i^2\right) - \log\left(\frac{1}{n-p}\left(\sum_{j=0}^m f'_j w_j U_j + \sum_{s\in\Omega_0}v_s u_s^2\right)\right) + \sum_{j=1}^m \frac{f'_j}{n-p}\log(w_j) + \frac{\sum_{s\in\Omega_0}\log(v_s)}{n-p}
+\end{split}
+$$
 
+In the previous proof of $F_n(\lambda)$ we showed the convergence of the first and second elements of $G_n(\lambda)$. 
 
+For the third element, recall that $\frac{f'_j}{n-p} \rightarrow q_j$ which implies that $\sum_{j=1}^m \frac{f'_j}{n-p}\log(w_j) \rightarrow^p\sum_{j=1}^m q_j\log(w_j)$ which has been shown that the supremum of this third element converges in probability to 0.
 
+The final element of this equation converges to $0$, since under the null hypothesis $v_s \rightarrow 1$ as previously shown. 
+
+Therefore by the uniform convergence theorem, $\sup_{\lambda \in [-\delta,T]} \left|G_n(\lambda) - F_0(\lambda)\right| \rightarrow^p 0$. $G_n(\lambda)$ therefore converges uniformly to $F_0(\lambda)$ in probability over $\lambda \in [-\delta, T]$.
 
 
 
