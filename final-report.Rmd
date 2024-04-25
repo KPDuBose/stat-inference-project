@@ -109,9 +109,56 @@ $$
 \Rightarrow \log\left( \frac{1}{n-p} \sum_{i=1}^{n-p} u_i^2 \right) \rightarrow ^p \log(1) = 0
 $$
 
-Looking at the second term:
+Looking at the second term, we note that $U_j = \frac{1}{f'_j} \sum_{i = \Omega_j} u_i^2$ for $j = 0, ..., m$. Additionally, we note here that $f'_j = |\Omega_j|$ which is the count of the times that $phi_j$ is replicated in non-zero eignevalues. For the purposes of this, it is sufficient to say that $|\Omega_j|$ is a count. 
 
+We can rewrite $U_j$ as:
 
+$$
+U_j = \frac{1}{|\Omega_j|} \sum_{i = \Omega_j} (u_i - 0)^2 \rightarrow^p 1
+$$
+
+since $u_i \sim N(0,1)$ as previously stated. 
+
+Additionally, this implies that as $U_j \rightarrow^p 1$:
+
+$$
+\Rightarrow \sum_{s \in \Omega_0} \frac{v_s u_s^2}{n - p} \rightarrow^p 0
+$$
+
+under the null hypothesis. 
+
+This is since $v_s = 1$ under the null hypothesis:
+
+$$
+v_s = \frac{1}{1+\lambda \rho_s} = \frac{1}{1+0} = 1
+$$
+
+Additionally, as long as $\sum_{s \in \Omega_0} {u_s^2}$ is finite, then $\sum_{s \in \Omega_0} \frac{v_s u_s^2}{n - p} = \sum_{s \in \Omega_0} \frac{u_s^2}{n - p} \rightarrow 0$ as $(n-p) \rightarrow \infty$.
+
+Noted in the paper:
+
+$$
+\begin{split}
+\frac{f'_j}{n-p} \rightarrow q_j \\
+\frac{f_j}{n} \rightarrow q_j
+\end{split}
+$$
+
+The suggests that the second term of the equation:
+
+$$
+- \log\left( \frac{\sum_{j=0}^m f'_j w_j U_j}{n-p} + \frac{\sum_{s \in \Omega_0}v_s u_s^2}{n-p}  \right) \rightarrow^p -\log\left( \sum_{j=0}^m q_j w_j + 0\right) = -\log\left( \sum_{j=0}^m q_j w_j \right)
+$$
+
+From here, we can see that $sup_{\lambda \in [-\delta,T]}\left| - \log\left( \frac{\sum_{j=0}^m f'_j w_j U_j}{n-p} + \frac{\sum_{s \in \Omega_0}v_s u_s^2}{n-p}  \right)\right| \rightarrow^p 0$. 
+
+The third element of the equation converges:
+
+$$
+\sum_{j=1}^m \frac{f_j}{n} \log(w_j) \rightarrow^p \sum_{j=1}^m q_j \log(w_j)
+$$
+
+Similar to the second element, the supremum of the third element should converge to 0. Using the continuous mapping theorem, $\sup_{\lambda \in [-\delta, T]} |F_n(\lambda) - F_0(\lambda)| \rightarrow^p 0$. Therefore, $F_n(\lambda)$ converges uniformly to $F_0(\lambda)$ over the interval $\lambda \in [-\delta, T]$.
 
 
 
