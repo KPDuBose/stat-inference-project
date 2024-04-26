@@ -201,8 +201,7 @@ $$
 
 Which suggests that $\lambda = 0$ is the unique maximum of $F_0(\lambda)$.
 
-
-
+iii) Since $\lambda = 0$ has been established as the unique global maximum, we can reference theorem 5.7 of *Asymptotic Statistics* (1998) by A. van der Vaart, which states that if there is a unique global estimator with the properties we have already established, then $\hat \theta \rightarrow^p \theta_0$. In this case, both the MLE $\hat \lambda_n$ and the REML $\hat \lambda^r_n$ have the unique global maximu at $\lambda = 0$ and would both converge in probability to $0$ according to this theorem.
 
 
 
