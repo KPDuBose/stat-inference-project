@@ -177,6 +177,30 @@ Therefore by the uniform convergence theorem, $\sup_{\lambda \in [-\delta,T]} \l
 
 ii) Recall that $F_0(\lambda) = \sum_{j=0}^m q_j \log(w_j) - \log\left(\sum_{j = 0}^m q_j w_j\right)$.
 
+The proof that the authors used involved Jensen's inequality to show that $F_0(\lambda)$ achieves its unique maximum at $\lambda = 0$. I was confused by this and will include my thought process in coming to the conclusion that I did.
+
+When evaluating under the null hypothesis at $\lambda = 0$, we really only need to worry about the second term $- \log(\sum_{j=0}^m q_j w_j)$. Additionally, when considering with the constrain of the bounded parameter space $\lambda \ge 0$, we can see that $F_0(\lambda) \le 0$ when $\lambda \ge 0$. We also note that $q_j$ is a proportion such that $\sum_{j=0}^m q_j \le 1$. 
+
+Under these constraints. 
+
+$$
+\begin{split}
+F_0(0) & = -\log\left( \sum_{j=0}^m q_j \right) | \sum_{j=0}^m q_j \le 1 \\
+\Rightarrow F_0(0) & \ge 0 \; when \; \lambda = 0 \\
+\end{split}
+$$
+
+Since $\lambda$ can only be non-negative with the way it has been defined in this paper:
+
+$$
+\begin{split}
+\left|\sum_{j=0}^m q_j \log\left(\frac{1}{1 + \lambda \phi_j}\right)\right| > \left| \log\left(\sum_{j=0}^m q_j \frac{1}{1 + \lambda\phi_j}\right) \right| \\
+\Rightarrow F_0(\lambda) \le 0
+\end{split}
+$$
+
+Which suggests that $\lambda = 0$ is the unique maximum of $F_0(\lambda)$.
+
 
 
 
