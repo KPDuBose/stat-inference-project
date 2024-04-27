@@ -1,9 +1,10 @@
 ---
 title: "Untitled"
-subtitle: "PHS 7010 Fall 2023 - Final Report"
+subtitle: "PHS 7095, Spring 2024 - Final Report"
 geometry: margin=3cm
 output: 
   pdf_document:
+    latex_engine: xelatex    
     number_sections: true
 author: "Kline Dubose, Haojia Li"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
@@ -16,11 +17,15 @@ options(knitr.kable.NA = "")
 options(digits = 4)
 ```
 
+# Introduction
+
+- Non-standard because the parameter under the null hypothesis is on the boundary of the parameter space and the response variables are not independent under the alternative.
+- Special case of variance component of familial relatedness in linear mixed models.
+
 # Likelihood ratio tests in linear mixed models with one variance component
 
-Crainiceanu and Ruppert (2004) derived the finite sample distribution of the LRT and RLRT statistics for testing the null hypothesis that the variance component is 0 in a linear mixed model (LMM) with one variance component. 
-They also derived the asymptotic distribution of the LRT and RLRT statistics under the null with weak assumptions on eigenvalues of certain design matrices.
-The assumptions are different from the restrictive assumptions by Self and Liang (1987), that the response variable vector can be partitioned into independent and identically distributed (i.i.d.) subvectors and the number of independent subvectors tends to $\infty$. The downside of using the restrictive assumptions is that the result would not hold for a fixed number of subjects, even if the number of observations per subject increased to $\infty$.
+Crainiceanu and Ruppert (2004) derived both the finite sample distribution and the asymptotic distribution of the LRT and RLRT statistics for testing the null hypothesis that the variance component is 0 in a linear mixed model (LMM) with one variance component. 
+They used weak assumptions on eigenvalues of certain design matrices, and released the hypothesis of i.i.d. data in the restrictive assumptions by Self and Liang (1987), that the response variable vector can be partitioned into independent and identically distributed subvectors and the number of independent subvectors tends to $\infty$.
 
 Consider an LMM with one variance component
 
@@ -29,7 +34,8 @@ $$
 E\left(\begin{array}{c}\mathbf{b}\\\epsilon\end{array}\right) =
 \left(\begin{array}{c}\mathbf{0}_K\\\mathbf{0}_n\end{array}\right),\
 \text{cov}\left(\begin{array}{c}\mathbf{b}\\\epsilon\end{array}\right) = 
-\left(\begin{array}{cc}\sigma_b^2 \Sigma & \mathbf{0}\\\mathbf{0} & \sigma_{\epsilon}^2 I_n\end{array}\right)
+\left(\begin{array}{cc}\sigma_b^2 \Sigma & \mathbf{0}\\\mathbf{0} & \sigma_{\epsilon}^2 I_n\end{array}\right),
+\tag{1}
 $$
 
 where,
@@ -45,7 +51,7 @@ Under these conditions it follows that
 
 $$
 \begin{aligned}
-E(\mathbf{Y}) &= X\mathbf{\beta},\\
+E(\mathbf{Y}) &= X\beta,\\
 \text{var}(\mathbf{Y}) &= \sigma_{\epsilon}^2 V_{\lambda}
 \end{aligned}
 $$
@@ -55,6 +61,60 @@ where
 - $\lambda = \sigma_b^2 / \sigma_{\epsilon}^2$, which can be considered a signal-to-noise ratio,
 - $V_{\lambda} = I_n + \lambda Z\Sigma Z'$.
 
+In this context, $\sigma_b^2 = 0$ if and only if $\lambda = 0$, and the parameter space for $\lambda$ is $[0, \infty)$.
+
+The authors proposed a general form of the null hypothesis ($H_0$) and alternative hypothesis ($H_A$):
+
+$$\begin{aligned}
+H_0&: \beta_{p+1-q} = \beta_{p+1-q}^0, ..., \beta_p = \beta_p^0,\ \ \ \ \ \ \ \sigma_b^2 = 0 \text{ (or equivalently }\lambda = 0) \\
+H_A&: \beta_{p+1-q} \neq \beta_{p+1-q}^0, ..., \beta_p \neq \beta_p^0,\ \ \ \ \ \ \ \sigma_b^2 > 0 \text{ (or equivalently }\lambda > 0)
+\end{aligned}$$
+
+where the $q$ denotes the number of fixed effects parameters constrained under $H_0$. 
+An application of this method with $q>0$ is using LRTs and RLRTs for testing a polynomial fit against a general alternative described by penalized splines (P-splines), in Section 5 of the paper. 
+
+However, we will only focus on the particular case of $q=0$:
+
+$$
+H_0: \sigma_b^2 = 0\ (\lambda = 0)\ \text{ vs. } \ H_A: \sigma_b^2 > 0\ (\lambda > 0)
+$$
+
+Twice the log-likelihood ratio statistic for model (1) is
+
+$$
+2\log L(\beta, \lambda, \sigma_e^2) = -\log(\sigma_e^2) - \log |V_\lambda| - \frac{(Y - X\beta)'V_\lambda^{-1}(Y - X\beta)}{\sigma_e^2}
+$$
+
+
+
+## Algorithm to simulate the null finite sample distribution of $LRT_n$
+
+*Step 1*: define a grid 0 = $\lambda_1$ < $\lambda_2$ < ... < $\lambda_m$ of possible values for $\lambda$.
+
+*Step 2*: simulate K independent $\chi^2_1$ random variables $w^2_1$, ..., $w^2_K$. Set $S_K = \sum^K_{s=1} w_s^2$.
+
+*Step 3*: independently of step 1, simulate $X_{n,K,p} = \sum^{n-p}_{s=K+1} w_s^2$ with a $\chi^2_{n-p-K}$-distribution.
+
+*Step 4*: independently of steps 1 and 2, simulate $X_q = \sum^q_{s=1} u_s^2$ with a $\chi^2_q$-distribution.
+
+*Step 5*: for every grid point $\lambda_i$ compute
+
+$$\begin{gathered}
+N_n(\lambda_i) = \sum^K_{s=1} \frac{\lambda_i \mu_{s,n}}{1+\lambda_i \mu_{s,n}} w_s^2 \\
+D_n(\lambda_i) = \sum^K_{s=1} \frac{w_s^2}{1+\lambda_i \mu_{s,n}} w_s^2 + X_{n,K,p} \\
+\end{gathered}$$
+
+*Step 6*: determine $\lambda_{max}$ which maximizes $f_n(\lambda_i)$ over $\lambda_1$, ..., $\lambda_m$.
+
+*Step 7*: compute 
+
+$$LRT_n = f_n(\lambda_{max}) + n\log (1+ \frac{X_q}{S_K + X_{n,K,p}})$$
+
+*Step 8*: repeat steps 2-7 until the desired number of simulations is achieved.
+
+
+
+## Conclusion
 
 
 
@@ -204,7 +264,9 @@ Which suggests that $\lambda = 0$ is the unique maximum of $F_0(\lambda)$.
 iii) Since $\lambda = 0$ has been established as the unique global maximum, we can reference theorem 5.7 of *Asymptotic Statistics* (1998) by A. van der Vaart, which states that if there is a unique global estimator with the properties we have already established, then $\hat \theta \rightarrow^p \theta_0$. In this case, both the MLE $\hat \lambda_n$ and the REML $\hat \lambda^r_n$ have the unique global maximu at $\lambda = 0$ and would both converge in probability to $0$ according to this theorem.
 
 
+# Simulation Study
 
+# Discussion
 
 
 
