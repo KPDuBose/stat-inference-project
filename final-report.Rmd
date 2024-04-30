@@ -263,6 +263,123 @@ Which suggests that $\lambda = 0$ is the unique maximum of $F_0(\lambda)$.
 
 iii) Since $\lambda = 0$ has been established as the unique global maximum, we can reference theorem 5.7 of *Asymptotic Statistics* (1998) by A. van der Vaart, which states that if there is a unique global estimator with the properties we have already established, then $\hat \theta \rightarrow^p \theta_0$. In this case, both the MLE $\hat \lambda_n$ and the REML $\hat \lambda^r_n$ have the unique global maximu at $\lambda = 0$ and would both converge in probability to $0$ according to this theorem.
 
+## Theorem 1
+
+***Suppose the $sup_{s\in \Omega_0} \le B$ are bounded and $p = o\left(\sqrt{n-p}\right)$. Then, under the null hypothesis (i) $\sqrt{n-p} \hat \lambda_n \rightarrow^p \frac 1 2 1_{\{0\}} + \frac 1 2 N(0, \sigma^2_\lambda)^+$, as $n \rightarrow \infty$; (ii) $\sqrt{n-p} \hat \lambda^r_n \rightarrow^D \frac 1 2 1_{\{0\}} + \frac 1 2 N(0, \sigma_\lambda^2)^+$, as $(n-p) \rightarrow \infty$; where $\sigma_\lambda^2 = \frac{2}{V(Z_\phi)}$ and $N(0, \sigma_\lambda^2)^+ = max(0, N(0, \sigma_\lambda^2))$ is the left truncated distribution of $N(0, \sigma_\lambda^2)$ at 0. ***
+
+As previoiusly discussed in Lemma 3, $\hat \lambda_n$ and $\hat \lambda_n^r$ are the global maximizers under the null over the interval $[-\delta, T]$.
+
+**i)**
+
+Let's think of MLE $\hat \lambda_n$ as the left truncated at 0. Such that:
+
+$$
+\hat \lambda_n = \{ \begin{split}
+& \tilde \lambda_n \; \; \; \tilde \lambda_n >0 \\
+& 0 \; \; \; \; \; \tilde \lambda_n \le 0
+\end{split}
+$$
+
+When $n$ is large enough, note that $F_n' (\tilde \lambda_n) = 0$.
+
+If we take the Taylor series expansion of $F_n'$ around $0$ we get:
+
+$$
+0 = F_n'(0) + \tilde \lambda_n F_n''(0) + \frac 1 2 \tilde \lambda^2_n F_n''(c_n\tilde\lambda_n)
+$$
+where $c \in [0,1]$ and we define $c_n\tilde\lambda_n = \eta_n$
+
+We can rewrite the Taylor expansion.
+
+$$
+\begin{split}
+-F_n'(0) & = \tilde \lambda_n F_n''(0) + \frac 1 2 \tilde \lambda_n^2 F_n'''(\eta_n) \\
+\Rightarrow \tilde \lambda_n(F_n''(0) + \frac 1 2 \tilde \lambda F_n'''(\eta_n))& = -F_n'(0) \\
+\Rightarrow \sqrt{n-p} \tilde \lambda_n & = \frac
+{\sqrt{n-p}F_n'(0)}
+{-F_n''(0) - \frac 1 2 \tilde \lambda_n F_n''' (\eta_n)}
+\end{split}
+$$
+
+We can find $F_n'(0)$ and $F_n''(0)$ by taking the derivatives with respect to $\lambda$ and evaluating at $\lambda = 0$.
+
+$$
+\begin{split}
+F_n'(0) & = \frac {\partial}{\partial \lambda}\left[ \frac
+{\sum_{i=1}^{n-p} u^2}
+{\sum_{j=0}^m f_j \frac{1}{1+\lambda \phi_j}U_j + \sum_{s\in \Omega_0} \frac{1}{1+\lambda \rho_s}u_s^2} + \frac 1 n \sum_{j=1}^m f_j \log\left(\frac{1}{1+\lambda \phi_j}\right)\right]_{\lambda = 0} \\
+& = \frac
+{\sum_{j=0}^m \frac{f_j}{n-p} \phi_j U_j + \sum_{s\in \Omega_0} \frac{\rho_s u_s^2}{n-p}}
+{\sum_{j=0}^m \frac{f_j'}{n-p}U_j + \sum_{s\in \Omega_0} \frac{u_s^2}{n-p}} - \sum_{j=1}^m \frac {f_j}{n} \phi_j \\
+F_n''(0) & = \left(
+\frac
+{\sum_{j=0}^m \frac{f_j}{n-p} \phi_j U_j + \sum_{s\in \Omega_0} \frac{\rho_s u_s^2}{n-p}}
+{\sum_{j=0}^m \frac{f_j'}{n-p}U_j + \sum_{s\in \Omega_0} \frac{u_s^2}{n-p}}
+\right) ^2 
+- \frac
+{2 \sum_{j=0}^m \frac{f_j'}{n-p}\phi_j^2U_j + 2 \sum_{s\in \Omega_0} \frac{\rho_s^2u_s^2}{n-p}}
+{\sum_{j-0}^m \frac{f_j'}{n-p}U_j + \sum_{s\in \Omega_0}\frac{u_s^2}{n-p}}
++\sum_{j=1}^m \frac{f_j}{n} \phi^2_j
+\end{split}
+$$
+
+Let $\bar \rho_n = \sum_{j=0}^m \frac{f_j'}{n-p} \phi_j$ and $\bar \zeta_n = \sum_{j=0}^m \frac{f_j}{n}\phi_j$. 
+
+We can now find what the different parts of the equation converge to.
+
+$$
+\begin{split}
+\sqrt{n-p} F_n'(0) & = \sqrt{n-p}\left(
+\frac
+{\sum_{j=0}^m \frac{f_j'}{n-p}\phi_j U_j + O\left(\frac{p}{n-p}\right)}
+{\sum_{j=0}^m \frac{f_j'}{n-p}U_j + O\left(\frac{p}{n-p}\right)} - \bar \zeta_n
+\right) \\
+& = \frac
+{\sum_{j=0}^m \sqrt{\frac{f_j'}{n-p}}(\phi_j - \bar \zeta_n)\sqrt{f_j'}(U_j - 1) +\sqrt{n-p}(\bar \rho_n - \bar \zeta_n) + O\left(\frac{p}{\sqrt{n-p}}\right)}
+{\sum_{j=0}^m \frac{f_j'}{n-p}U_j + O\left(\frac{p}{n-p}\right)}
+\end{split}
+$$
+
+Here we note that $\bar \rho_n \rightarrow \sum_{j=0}^m q_j \phi_j = \bar \phi$ and $\bar \zeta_n \rightarrow \bar \phi$. 
+
+Additionally, we note the following:
+
+$$
+\begin{split}
+\sqrt{f_j'}(U_j - 1) \rightarrow^D z_i = N(0,2) \\
+\sum_{j=0}^m \frac{f_j'}{n-p} U_j + O\left(\frac{p}{n-p}\right) \rightarrow^p 1
+\end{split}
+$$
+
+Also, let $u^* = \lim_{n\rightarrow+\infty} \sqrt{n-p} (\bar \rho_n - \bar \zeta_n) = \lim_{n\rightarrow+\infty} u_n = 0$. Recall that in the paper $V(Z_\phi) = \sum_{j=0}^m q_j(\phi_j - 1)^2$
+
+Under those conditions and by Slutsky's theorem
+
+$$
+\sqrt{n-p} F_n'(0) \rightarrow^D N(u^*, 2V(Z_\phi))
+$$
+
+For the second part of the equation, note that:
+
+$$
+F_n''(0) \rightarrow^p F_n''(\lambda_0) = -V(Z_\phi)
+$$
+
+We note that $F_n'''(\eta_n)$ is finite and the $\hat \lambda_n \rightarrow^p 0$ as defined by Lemma 3. This implies that $\hat \lambda_n F_n'''(\eta_n)\rightarrow^p 0$.
+
+This lets us say that
+
+$$
+\sqrt{n-p} \tilde \lambda_n \rightarrow^D N\left(0, \frac{2}{V(Z_\phi)}\right)
+$$
+
+And since this hypothesis test is bounded on the edge of the parameter space, we can say that:
+
+$$
+\sqrt{n-p} \hat \lambda_n \rightarrow^D \frac 1 2 (1) + \frac 1 2 N\left(0, \frac{2}{V(Z_\phi)}\right)
+$$
+
+**ii)**
 
 # Simulation Study
 
