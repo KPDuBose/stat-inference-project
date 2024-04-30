@@ -449,6 +449,92 @@ $$
 \end{split}
 $$
 
+## Corollary 1
+
+***Under the same assumptions as in Theorem 1, i) $LRT_n \rightarrow^D \frac 1 2 1_{0} + \frac 1 2 \chi^2_1$, as $n \rightarrow \infty$; ii) $RLRT_n \rightarrow^D \frac 1 2 1_{\{0\}} + \frac 1 2 \chi_1^2$, as $(n-p)\rightarrow \infty$.***
+
+**i)**
+
+If we take a Taylor Expansion around $F_n(\tilde \lambda_n)$ gives us:
+
+$$
+F_n(\tilde \lambda_n) = \tilde \lambda_n(F_n'(0)+\frac 1 2\tilde\lambda_n F_n''(0) + \frac 1 6 \tilde \lambda_n^2 F_n'''(\tilde \eta_n))
+$$
+
+where $\tilde \eta_n = \tilde c_n \tilde \lambda_n$ and $\tilde c_n \in [0,1]$. 
+
+Recall that according to the proof for Theorem 1, $F_n'(0)$ can be written as:
+
+$$
+F_n'(0) = -\tilde\lambda_nF_n''(0) - \frac 1 2 \tilde \lambda_n^2 F_n'''(\eta_n)
+$$
+
+We can combine the two equations and get:
+
+$$
+(n-p) F_n(\tilde\lambda_n) = -\frac 1 2 (n-p) \tilde \lambda_n^2F_n''(0) + (n-p)\tilde \lambda_n^3 \left[\frac 1 6 F_n'''(\tilde\eta_n) - \frac 1 2 F_n'''(\eta_n)\right]
+$$
+
+We note here that $F_n'''(\eta_n)$ and $F_n'''(\tilde \eta_n)$ are both finite and $\tilde \lambda_n \rightarrow^p 0$ which allows us to rewrite the equation as:
+
+$$
+(n-p)F_n(\tilde\lambda_n) = -\frac{F_n''(0)}{2}(\sqrt{n-p}\tilde \lambda_n)^2
+$$
+
+Recall from the previous proof that $-F_n''(0) \rightarrow^p V(Z_\phi)$ and $\sqrt{n-p}\tilde\lambda \rightarrow^D N\left(0, \frac{2}{V(Z_\phi)}\right)$.
+
+Thus, when $\tilde\lambda_n >0$, $(n-p)F_n(\tilde\lambda_n)\rightarrow^D \chi_1^2$ and
+
+$$
+LRT_n \rightarrow^D \frac 1 2 1_{\{0\}} + \frac 1 2 \chi_1^2
+$$
+as $n\rightarrow \infty$.
+
+**ii)**
+
+For the RLRT, we start with doing a Taylor's expansion of $G_n$ around $0$:
+
+$$
+G_n(\tilde \lambda_n^r) = \tilde \lambda_n^r(G_n'(0) + \frac 1 2 \tilde \lambda_n^r G_n''(0)+ \frac 1 6 (\tilde \lambda_n^r)G_n'''(\tilde \eta_n))
+$$
+
+Where $\tilde \eta_n = \tilde c_n \tilde\lambda_n$ and $\tilde c_n \in [0,1]$.
+
+Note that from the Theorem 1 proof we can write $G-n'(0)$ as:
+
+$$
+G_n'(0) = -\tilde\lambda_n^r G_n''(0) - \frac 1 2(\tilde \lambda_n^r)^2 G_n'''(\eta_n)
+$$
+
+We can use this equation to get:
+
+$$
+(n-p) G_n(\tilde\lambda_n^r) = -\frac 1 2 (n-p)(\tilde\lambda_n^r)^2 G_n''(0) + (n-p)(\tilde\lambda_n^r)^3\left[\frac 1 6 G_n'''(\tilde \eta_n) - \frac 1 2 G_n'''(\eta_n)\right]
+$$
+
+Since $G_n'''(\tilde\eta_n)$ and $G_n'''(\eta)$ are finite and $(\tilde\lambda_n^r) \rightarrow^p 0$ we can rewrite this as:
+
+$$
+(n-p)G_n(\tilde \lambda_n^r) = -\frac 1 2 (n-p)(\tilde \lambda_n^r)^2G_n''(0)
+$$
+
+Which can again be rewritten as:
+
+$$
+(n-p)G_n(\tilde \lambda_n^r) = \left(-\frac{G_n''(0)}{V(Z_\phi)}\right)\left(\frac{V(Z_\phi)(n-p)}{2}(\tilde\lambda_n^r)^2\right)
+$$
+
+From the proof on Theorem 1, we can note that $-G_n''(0)\rightarrow^pV(Z_\phi)$. The second term in the equation,$\left(\frac{V(Z_\phi)(n-p)}{2}(\tilde\lambda_n^r)^2\right)\rightarrow\chi_1^2$. 
+
+Therefore, when $\tilde\lambda_n^r>0$:
+
+$$
+\begin{split}
+(n-p)G_n(\tilde\lambda_n^r)&\rightarrow^D\chi_1^2 \\
+\Rightarrow RLRT &\rightarrow^D \frac 1 2 1_{\{0\}} + \frac 1 2 \chi_1^2
+\end{split}
+$$
+
 # Simulation Study
 
 # Discussion
