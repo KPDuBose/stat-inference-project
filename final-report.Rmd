@@ -381,6 +381,74 @@ $$
 
 **ii)**
 
+This proof is pretty similar to part i), with a few minor changes since we will be working with $G_n(\lambda)$. We essentially follow the same steps.
+
+When doing the Taylor's expansion around $0$ and solving for $\tilde \lambda_n^r$ we get:
+
+$$
+\sqrt{n-p} \tilde \lambda_n^r = \frac
+{\sqrt{n-p}G_n'(0)}
+{-G_n''(0) - \frac 1 2 \tilde \lambda_n^r G_n''(\eta_n)} - \frac
+{\sum_{s\in\Omega_0}\rho_s v_s^2}
+{n-p}
+$$
+
+Taking the derivatives of $G_n(\lambda)$ and evaluating at $0$ to find $G_n'(0)$ and $G_n''(0)$:
+
+$$
+\begin{split}
+G_n'(0) & = \frac
+{\sum_{j=0}^m \frac{f_j'}{n-p} \phi_j U_j + \frac{1}{n-p} \sum_{s\in \Omega_0}\rho_s u_s^2} 
+{\sum_{j=0}^m \frac{f_j'}{n-p} U_j + \frac{1}{n-p}\sum_{s\in\Omega_0}u_s^2} - 
+\sum_{j=1}^m \frac{f_j'}{n-p}\phi_j - \sum_{s\in\Omega_0}\frac{\rho_s}{n-p} \\
+G_n''(0) & = \left(
+\frac
+{\sum_{j=0}^m \frac{f_j'}{n-p} \phi_j U_j + \frac{1}{n-p} \sum_{s\in \Omega_0}\rho_s u_s^2} 
+{\sum_{j=0}^m \frac{f_j'}{n-p} U_j + \frac{1}{n-p}\sum_{s\in\Omega_0}u_s^2}
+\right)^2 - 
+\frac
+{2 \sum_{j=0}^m \frac{f_j'}{n-p} \phi_j U_j + \frac{1}{n-p}\sum_{s\in\Omega_0}\rho_s^2u_s^2}
+{\sum_{j=0}^m \frac{f_j'}{n-p}U_j + \frac{1}{n-p}\sum_{s\in\Omega_0}u_2^2} + \sum_{j=1}^m\frac{f_j'}{n-p} \phi_j^2 + \sum_{s\in\Omega_0}\frac{\rho_s^2}{n-p}
+\end{split}
+$$
+
+Under Lemma 1 of the paper, $\sum_{s \in \Omega_0} \rho_s = O(p)$. Also define $\bar \phi = \sum_{j=0}^m q_j \phi_j$ and $\bar \rho_n = \sum_{j=0}^m \frac{f_j'}{n-p}\phi_j$.
+
+This implies that:
+
+$$
+\sqrt{n-p} G_n'(0) = \frac
+{sum_{j=0}^m \sqrt{\frac{f_j'}{n-p}}(\phi_j - \bar \rho_n)\sqrt{f_j'}(U_j-1) + O\left(\frac{1}{\sqrt{n-p}}\right) }
+{\sum_{j=0}^m \frac{f_j'}{n-p}U_j + O\left(\frac{p}{n-p}\right)} + O\left(\frac{p}{\sqrt{n-p}}\right)
+$$
+
+We note the following:
+
+$$
+\begin{split}
+\sqrt{f_j'}(U_j-1) \rightarrow^D z_j \sim N(0,2) \\
+\sum_{j=0}^m \frac{f_j'}{n-p} U_j + O\left(\frac{p}{n-p}\right) \rightarrow^p 1 \\
+\Rightarrow \sqrt{n-p} G'n_(0) \rightarrow ^D \sum_{j=0}^m\sqrt{q_j}(\phi_j - \bar \phi)z_j
+\end{split}
+$$
+
+Additionally note that:
+
+$$
+G_n''(0) \rightarrow^p \phi^2 - \sum_{j=1}^m q_j \phi_j^2 = -V(Z_\phi)
+$$
+
+And, since $G_n'''(\eta_n)$ is finite we can say that $\tilde \lambda_n^r G_n'''(\eta_n) \rightarrow^p 0$
+
+By Slutsky's:
+
+$$
+\begin{split}
+\sqrt{n-p} \tilde \lambda_n^r \rightarrow^D N(0, \frac{2}{V(Z_\phi)}) \\
+\sqrt{n-p} \hat \lambda_n^r \rightarrow^D \frac 1 2 1 + \frac 1 2 N(0, \frac{2}{V(Z_\phi)})
+\end{split}
+$$
+
 # Simulation Study
 
 # Discussion
