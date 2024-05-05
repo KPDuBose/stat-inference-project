@@ -843,7 +843,24 @@ $$
 
 ## Balanced one-way analysis of variance
 
-### Algorithm to simulate the null finite sample distribution of $LRT_n$
+Consider the balanced one-way ANOVA model with $K$ levels and $J$ observations per level:
+
+$$
+Y_{kj} = \mu + b_k + e_{kj}, \quad k = 1, \ldots, K; \quad j = 1, \ldots, J,
+$$
+
+where $e_{kj}$ are IID $N(0, \sigma^2)$, $b_k$ are IID random effects distributed $N(0, \sigma_b^2)$ independent of the $e_{kj}$ and $\mu$ is a fixed unknown intercept. 
+Define $\lambda = \frac{\sigma_b^2}{\sigma_e^2}$. 
+The matrix $X$ for fixed effects is simply a $JK \times 1$ column of 1s, the matrix $Z$ is a $JK \times K$ matrix with every column containing only 0s with the exception of a $J$-dimensional vector of 1s corresponding to the level parameter and the matrix $\Sigma$ is the identity matrix $I_K$. The size of the response vector $Y$ is $n = JK$.
+
+Consider the test for $\sigma_b^2 = 0$. To find the finite sample distributions of the $LRT_n$ or $RLRT_n$, we need to determine the eigenvalues of $Z^T Z$ and $Z^T P_0 Z$. In this simple model we can find them explicitly. All $K$ eigenvalues of the matrix $Z^T Z$ are equal and $\xi_{s,n} = J$. Also, one eigenvalue of the matrix $Z^T P_0 Z$ is equal to 0 and the remaining $K - 1$ eigenvalues are equal and $\mu_{s,n} = J$. Using theorem 1 it follows that
+
+$$
+LRT_n \overset{\mathcal{D}}{=} n \log \left( X_{K-1} + X_{n-K} \right) - \inf_{d\ge0} \left\{ n\log \left( \frac{X_{K-1}}{1+d} + X_{n-K} \right) + K \log(1 + d) \right\},
+$$
+
+where $X_{K-1}$ and $X_{n-K}$ are independent random variables with distributions $\chi^2_{K-1}$ and $\chi^2_{n-K}$ respectively. 
+This distribution can be obtained explicitly or simulated by the algorithm described below:
 
 *Step 1*: define a grid 0 = $\lambda_1$ < $\lambda_2$ < ... < $\lambda_m$ of possible values for $\lambda$.
 
@@ -866,7 +883,64 @@ $$LRT_n = f_n(\lambda_{max})$$
 
 *Step 7*: repeat steps 2-6 until the desired number of simulations is achieved.
 
-## Familial
+The finite sample probability mass at 0 is
+
+$$ \text{pr} \left\{ F_{K-1,n-K} \leq K/(K - 1)\right\},$$
+
+where $F_{K-1,n-K}$ has an $F$-distribution with $(K - 1, n - K)$ degrees of freedom.
+
+To obtain the aymptotic distribution when $J \to \infty$ and $K$ is constant note that if $\alpha = 1$ 
+then by Theorem 2
+
+$$
+LRT_n \Rightarrow \{ X_{K-1} - K - K \log (X_{K-1}/K) \}I(X_{K-1}>K),
+$$
+
+where $X_{K-1}$ denotes a random variable with a $\chi^2_{K-1}$-distribution, which has mass at 0 equal to $\text{pr} (X_{K-1} <K)$
+
+
+```{r, eval=TRUE, echo=TRUE, out.width="80%"}
+# setup
+K <- 5
+n <- 50
+J <- n/K
+lambda <- c(0, exp(seq(-12, 12, length.out = 200)))
+nsim <- 1000
+
+set.seed(7095)
+ws_sq <- matrix(rchisq(nsim * K, df = 1), nrow = nsim)
+sK <- rowSums(ws_sq)
+XnpK <- rchisq(nsim, df = n-1-K)
+
+lambda_max <- vector(length = nsim)
+LRT <- vector(length = nsim)
+
+for(i in 1:nsim) {
+  Nn <- sapply(lambda, \(l) sum(l*J/(1+l*J) * ws_sq[i,-1]))
+  Dn <- sapply(lambda, \(l) ws_sq[i,1] + sum(ws_sq[i,-1]/(1+l*J) * ws_sq[i,-1]) + XnpK[i])
+  fn <- n*log(1+Nn/Dn) - K*log(1+lambda*J)
+  lambda_max[i] <- lambda[which.max(fn)]
+  LRT[i] <- fn[which.max(fn)]
+}
+
+# create chi^2 mixture
+u <- rnorm(nsim)
+chisq_mix <- u^2*as.integer(u > 0)
+# draw a QQ plot of the LRT compared to the 0.5chi^2_0:0.5chi^2_1 mixture
+library(ggplot2)
+
+  ggplot(mapping = aes(x = quantile(LRT, seq(0, 1, 0.01)), 
+                       y = quantile(chisq_mix, seq(0, 1, 0.01)))) + 
+    geom_point() +
+    geom_abline(aes(slope = 1, intercept = 0), linetype = 2) +
+    labs(x = paste("Finite sample LRT quantiles"), 
+         y = paste("Chi-sq mixture quantiles"),
+         title = paste("QQ plot of finite sample LRT against Chi-sq mixture")) + 
+    theme_light() + coord_equal()
+
+```
+
+## Familial relatedness
 
 ```{r, eval=FALSE, echo=TRUE}
 pkgs <- c('dplyr',
@@ -880,11 +954,8 @@ pkgs <- c('dplyr',
           'pbmcapply')
 invisible(sapply(pkgs, library, character.only = TRUE))
 `%+%` <- function(...) paste0(...)
-##
-## Set global parameters ####
 
-### Name of simulation run/setting ####
-name <- 'test'
+## Set global parameters ####
 
 ### Family types ####
 a_1 <- Matrix(data = c(1.0, 0.0, 0.5,
@@ -1367,6 +1438,6 @@ sims(name = name,
 
 # Conclusion
 
-
+In this chapter we have presented the likelihood ratio test and the restricted likelihood ratio test for variance components in linear mixed models. We have shown that the likelihood ratio test is asymptotically distributed as a mixture of chi-squared distributions, while the restricted likelihood ratio test is asymptotically distributed as a chi-squared distribution. We have also shown how to simulate the finite sample distribution of these tests. Finally, we have presented a simulation study to illustrate the properties of these tests in practice.
 
 
