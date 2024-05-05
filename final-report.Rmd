@@ -52,10 +52,7 @@ where,
 Under these conditions it follows that
 
 $$
-\begin{aligned}
-E(\mathbf{Y}) &= X\boldsymbol\beta,\\
-\text{var}(\mathbf{Y}) &= \sigma_{\epsilon}^2 V_{\lambda}
-\end{aligned}
+E(\mathbf{Y}) = X \boldsymbol\beta \text{ and } \text{Cov}(\mathbf{Y}) = \sigma_{\epsilon}^2 V_{\lambda},
 $$
 
 where
@@ -83,8 +80,6 @@ $$
 
 ## Finite sample distribution of LRT and RLRT
 
-### LRT (Theorem 1)
-
 Twice the log-likelihood ratio statistic for model (1) is
 
 $$
@@ -96,8 +91,9 @@ and the LRT is defined as
 
 $$
 LRT_n = 2 \sup_{H_A} \{L(\boldsymbol\beta, \lambda, \sigma^2_{\epsilon})\} - 
-2 \sup_{H_0} \{L(\boldsymbol\beta, \lambda, \sigma^2_{\epsilon})\}
+2 \sup_{H_0} \{L(\boldsymbol\beta, \lambda, \sigma^2_{\epsilon})\}.
 $$
+
 Under the alternative hypothesis, by fixing  $\lambda$ and solving the first-order maximum conditions for $\boldsymbol\beta$ and $\sigma^2_{\epsilon}$,
 we obtain the profile likelihood estimates
 
@@ -109,359 +105,322 @@ $$
 Plugging these estimates back into the log-likelihood function, we obtain the profile log-likelihood function
 
 $$
-L^{K,n}(\lambda) = -\log|V_\lambda| - n\log(\mathbf{Y}'P_\lambda'V_{\lambda}^{-1} P_\lambda \mathbf{Y})
+L^{K,n}(\lambda) = -\log|V_\lambda| - n\log(\mathbf{Y}'P_\lambda'V_{\lambda}^{-1} P_\lambda \mathbf{Y}),
 $$
 
-where $P_\lambda = I_n-X(X'V_{\lambda}^{-1}X)^{-1}X'V_{\lambda}^{-1}$ and $P_0 = I_n-X(X'X)^{-1}X'$ under the null hypothesis when the model becomes a standard linear regression.
+where $P_\lambda = I_n-X(X'V_{\lambda}^{-1}X)^{-1}X'V_{\lambda}^{-1}$ and $P_0 = I_n-X(X'X)^{-1}X'$ under the null hypothesis when the model becomes a standard linear regression and $V_0 = I_n$.
 
 The LRT statistic can be written as
 
 $$
-LRT_n = \sup_{\lambda \ge 0} \{n\log(\mathbf{Y}'P_0 \mathbf{Y}) - n\log(\mathbf{Y}'P_\lambda'V_{\lambda}^{-1} P_\lambda \mathbf{Y}) - \log|V_{\lambda}|\}
+LRT_n = \sup_{\lambda \ge 0} \{n\log(\mathbf{Y}'P_0 \mathbf{Y}) - n\log(\mathbf{Y}'P_\lambda'V_{\lambda}^{-1} P_\lambda \mathbf{Y}) - \log|V_{\lambda}|\},
+\tag{3}
 $$
 
-The following theorem gives the spectral decomposition of the $LRT_n$ statistic for testing the null hypothesis (2) against the alternative hypothesis (3). Define
+which has the spectral decomposition given by Theorem 1 shown below.
+
+**Theorem 1.** If $\mu_{s,n}$ and $\xi_{s,n}$ are the $K$ eigenvalues of the $K \times K$ matrices $\Sigma^{1/2} Z'P_0 Z\Sigma^{1/2}$ and $\Sigma^{1/2} Z' Z\Sigma^{1/2}$ respectively, where $P_0 = I_n - X(X' X)^{-1} X'$, then
 
 $$
-f_n(\lambda) = n \log \left\{ 1 + \frac{N_n(\lambda)}{D_n(\lambda)} \right\} - \sum_{s=1}^K \log(1 + \lambda \xi_{s,n}),
+LRT_{n} \overset{\mathcal D}{=} \sup_{\lambda \geq 0} f_n(\lambda)
+= \sup_{\lambda \geq 0} \left\{n \log  \frac{N_n(\lambda) + D_n(\lambda)}{D_n(\lambda)}  - \sum_{s=1}^K \log(1 + \lambda \xi_{s,n})\right\},
+\tag{4}
 $$
 
-where $N_n(\lambda)$ and $D_n(\lambda)$ are defined in theorem 1.
-
-**Theorem 1.** If $\mu_{s,n}$ and $\xi_{s,n}$ are the $K$ eigenvalues of the $K \times K$ matrices $\Sigma^{1/2} Z^T P_0 Z\Sigma^{1/2}$ and $\Sigma^{1/2} Z^T Z\Sigma^{1/2}$ respectively, where $P_0 = I_n - X(X^T X)^{-1} X^T$, then
+where the notation $\overset{\mathcal D}{=}$ denotes equality in distribution and
 
 $$
-LRT_{n} = n \left( 1 + \sum_{s=1}^q \frac{u_s^2}{w_s^2} - \frac{n-p}{\sum_{s=1}^{n-p} w_s^2} + \sup_{\lambda \geq 0} f_n(\lambda) \right),
-$$
-
-where $u_s$ for $s = 1, \ldots, K$ and $w_s$ for $s = 1, \ldots, n - p$ are independent $N(0, 1)$, the notation $\Rightarrow$ denotes equality in distribution and
-
-$$
-N_n(\lambda) = \sum_{s=1}^K \frac{\lambda \mu_{s, n}}{1 + \lambda \mu_{s, n}},
-$$
-
-$$
+N_n(\lambda) = \sum_{s=1}^K \frac{\lambda \mu_{s, n}}{1 + \lambda \mu_{s, n}},\ 
 D_n(\lambda) = \sum_{s=1}^K \frac{w_s^2}{1 + \lambda \mu_{s, n}} + \sum_{s=K+1}^{n-p} w_s^2.
 $$
 
+$w_s$ for $s = 1, ..., n-p$ are independent $N(0,1)$.
 
-The spectral representations (7) and (9) below can be used to compute the probability mass at 0 of the LRT and RLRT statistic for testing that the variance component is 0 with no constraints on the fixed effects ($q = 0$ and $\sigma_b^2 = 0$). The first-order condition for $f_n(\lambda)$ to have a local maximum at $\lambda = 0$ is
+The distribution described in equation (4) only depends on the eigenvalues $\mu_{s,n}$ in the first part and $\xi_{s,n}$ in the second part of the two $K \times K$ matrices. Taking the advantage of the spectral decomposition, the eigenvalues would only need to be calculated once before the simulation starts the iterative process. The speed depends on the number of random effects $K$ instead of the number of observations $n$. The steps of the algorithm to simulate the null finite sample distribution of $LRT_n$ are presented in Section 4.
 
-$$
-\left. \frac{\partial f_n(\lambda)}{\partial \lambda} \right|_{\lambda=0} \leq 0.
-$$
-
-It follows that the probability of having a local maximum of the profile likelihood at $\lambda = 0$ is
+The probability of having a local maximum of the profile likelihood at $\lambda = 0$ is
 
 $$
-\text{pr} \left( \frac{\sum_{s=1}^K \mu_{s,n} w_s^2}{\sum_{s=1}^{n-p} w_s^2} \leq \frac{1}{n} \sum_{s=1}^K \xi_{s,n} \right). \tag{8}
+\text{pr} \left( \frac{\sum_{s=1}^K \mu_{s,n} w_s^2}{\sum_{s=1}^{n-p} w_s^2} \leq \frac{1}{n} \sum_{s=1}^K \xi_{s,n} \right)
 $$
 
-### Proof of Theorem 1
+where $w_s$ are independent $N(0, 1)$ random variables.
 
-We partition first the vector of fixed effect parameters $\beta = (\beta_1^T \beta_2^T)^T$, where $\beta_2 = \beta_{20}$ are the known fixed effect parameters under the null hypothesis. We can also partition the matrix of fixed effects $X = (X_1 X_2)$ corresponding to the partition of $\beta$. Using the notations in the paper, the LRT statistic can be written as:
+This is the exact probability of a local maximum at 0 and provides an excellent approximation for the probability of a global maximum at $\lambda = 0$.
 
-$$
-LRT_n = \sup_{\lambda \geq 0} \left\{ n \log \left( \frac{y^T P_0 y}{y^T P_{\lambda}^{-1} y} \right) - n \log(\lvert V_{\lambda} \rvert) + n \log(\lvert S_1 \rvert) \right\}
-$$
-
-The first part of the right hand side of equation (1) corresponds to testing for the zero variance of random effects while the second part corresponds to testing for the fixed effects. One can easily show that $\log\lvert V_{\lambda} \rvert = -\sum_{s=1}^K \log(1 + \lambda \xi_{s,n})$. Also, from Kuo, 1999 and Patterson and Thompson, 1971 there exists an $n \times (n - p)$ matrix $W$ such that $W^T W = I_{n-p}, W^T P_0 = P_0, W^T V_{\lambda} = \text{diag}({1 + \lambda \mu_{s,n}})$, and 
+Similarly, twice the restricted profile log-likelihood function is
 
 $$
-y^T P_{\lambda}^{-1} y = y^T W \text{diag}(1 + \lambda \mu_{s,n})^{-1} W^T y.
+2l^{K,n}(\lambda) = -\log|V_\lambda| - \log|X' V_\lambda^{-1} X| - (n - p) \log(\mathbf{Y}' P_\lambda' V_\lambda^{-1} P_\lambda \mathbf{Y}).
 $$
 
-Denote by $w = W^T y / \sigma_c$ and note that under the null hypothesis
+Then, under the null hypothesis $H_0: \sigma_b^2 = 0\ (\lambda = 0)$,
 
 $$
-E[w] = (W^T X_1 \beta_1 + W^T X_2 \beta_2)/\sigma_c, \quad \text{Cov}[w] = I_{n-p}.
-$$
-
-We now show that $E[w] = 0$. Denote by $A = W^T X$ and observe that $WA = P_0 X = 0$, and that $W^T W A = 0$. This shows that $A = 0$, that $W^T X_1 = 0$, and that $W^T X_2 = 0$. It now follows that $w = (w_1, ..., w_{n-p})$ is an $n - p$ dimensional random vector with i.i.d. $N(0,1)$ components. Putting all these together it follows that:
-
-$$
-L_{n}(\lambda) = -n \log \left( \sigma_c^2 \left( \sum_{s=1}^K \frac{w_s^2}{1 + \lambda \mu_{s,n}} + \sum_{s=K+1}^{n-p} w_s^2 \right) \right) - \sum_{s=1}^K \log(1 + \lambda \xi_{s,n}),
-$$
-
-where we used the fact that at most $K$ eigenvalues $\mu_{s,n}$ and $\xi_{s,n}$ are not zero. In particular
-
-$$
-L_{n}(0) = -n \log \left( \sigma_c^2 \left( \sum_{s=1}^{n-p} w_s^2 \right) \right),
-$$
-
-which is a standard result in regression analysis. Therefore we can write
-
-$$
-L_{n}(\lambda) - L_{n}(0) = n \log \left(1 + U_n(\lambda)\right),
-$$
-
-where $U_n(\lambda) = N_n(\lambda)/D_n(\lambda)$ and 
-
-$$
-N_n(\lambda) = \sum_{s=1}^K \frac{\lambda \mu_{s,n} w_s^2}{1 + \lambda \mu_{s,n}}, \quad D_n(\lambda) = \sum_{s=1}^K \frac{w_s^2}{1 + \lambda \mu_{s,n}} + \sum_{s=K+1}^{n-p} w_s^2.
-$$
-
-
-### RLRT
-
-Residual, or restricted, maximum likelihood (REML) was introduced by Patterson and Thompson (1971) to take into account the loss in degrees of freedom due to estimation of $\beta$-parameters. REML consists of maximizing the likelihood function that is associated with $n - p$ linearly independent contrasts, and the log-likelihood function for any such set of contrasts differs by no more than an additive constant (Harville, 1977). Twice the restricted profile log-likelihood function is
-
-$$
-2l^*_n(\lambda) = -\log|\mathbf{V}_\lambda| - \log|\mathbf{X}^T \mathbf{V}_\lambda^{-1} \mathbf{X}| - (n - p) \log(\mathbf{Y}^T \mathbf{P}_\lambda \mathbf{V}_\lambda^{-1} \mathbf{P}_\lambda \mathbf{Y}).
-$$
-
-The RLRT$_n$ is defined like the LRT$_n$ by using the restricted likelihood instead of the likelihood function. Because the RLRT$_n$ uses the likelihood of residuals after fitting the fixed effects, the RLRT is appropriate for testing only when the fixed effects are the same under the null and alternative hypotheses. Therefore the RLRT$_n$ will be used only when the number of fixed effects constrained under $H_0$ is $q = 0$ and we test for $\sigma_b^2 = 0$ only. Then, under the null hypothesis described in equation (4),
-
-$$
-RLRT_n = \sup_{\lambda \geq 0} \left[ (n - p) \log \left( 1 + \frac{N_n(\lambda)}{D_n(\lambda)} \right) - \sum_{s=1}^K \log(1 + \lambda \mu_{s,n}) \right],
+RLRT_n = \sup_{\lambda \geq 0} \left\{ (n - p) \log \frac{N_n(\lambda)+D_n(\lambda)}{D_n(\lambda)} - \sum_{s=1}^K \log(1 + \lambda \mu_{s,n}) \right\},
 $$
 
 and the probability of having a local maximum at $\lambda = 0$ is
 
 $$
-\text{pr} \left( \frac{\sum_{s=1}^K \mu_{s,n} w_s^2}{\sum_{s=1}^{n-p} w_s^2} \leq \frac{1}{n-p} \sum_{s=1}^K \mu_{s,n} \right),
+\text{pr} \left( \frac{\sum_{s=1}^K \mu_{s,n} w_s^2}{\sum_{s=1}^{n-p} w_s^2} \leq \frac{1}{n-p} \sum_{s=1}^K \mu_{s,n} \right).
 $$
 
-where $w_1, \ldots, w_k$ are independent $N(0, 1)$ random variables. The notation here is the same as in theorem 1. An efficient simulation algorithm for the finite sample distribution of RLRT$_n$ can be easily obtained by direct analogy with the LRT$_n$ case.
+***Proof of Theorem 1***
+
+Starting with equation (3), one can easily show that $\log\lvert V_{\lambda} \rvert = -\sum_{s=1}^K \log(1 + \lambda \xi_{s,n})$. 
+
+Also, from Kuo, 1999 and Patterson and Thompson, 1971 there exists an $n \times (n - p)$ matrix $W$ such that $W' W = I_{n-p}, WW'= P_0, W' V_{\lambda}W = \text{diag}\{({1 + \lambda \mu_{s,n}})\}$, and 
+
+$$
+\mathbf{Y}' P_{\lambda}'V_{\lambda}^{-1}P_{\lambda} \mathbf{Y} = \mathbf{Y}' W \text{diag}\{(1 + \lambda \mu_{s,n})^{-1}\} W' \mathbf{Y}.
+$$
+
+Denote by $w = W' \mathbf{Y} / \sigma_\epsilon$ and note that under the null hypothesis
+
+$$
+E[w] = W' X\boldsymbol\beta/\sigma_\epsilon, \quad \text{Cov}[w] = I_{n-p}.
+$$
+
+We now show that $E[w] = 0$. Denote by $A = W' X$ and observe that $WA = P_0 X = 0$, and that $W' W A = 0$. This shows that $A = 0$, that $W' X = 0$. It now follows that $w = (w_1, \ldots, w_{n-p})$ is an $n - p$ dimensional random vector with i.i.d. $N(0,1)$ components. Putting all these together it follows that:
+
+$$
+L^{K,n}(\lambda) = -n \log \left\{ \sigma_\epsilon^2 \left( \sum_{s=1}^K \frac{w_s^2}{1 + \lambda \mu_{s,n}} + \sum_{s=K+1}^{n-p} w_s^2 \right) \right\} - \sum_{s=1}^K \log(1 + \lambda \xi_{s,n}),
+$$
+
+where we used the fact that at most $K$ eigenvalues $\mu_{s,n}$ and $\xi_{s,n}$ are not zero. In particular
+
+$$
+L^{K,n}(0) = -n \log \left\{ \sigma_\epsilon^2 \left( \sum_{s=1}^{n-p} w_s^2 \right) \right\},
+$$
+
+which is a standard result in regression analysis. Therefore we can write
+
+$$
+L^{K,n}(\lambda) - L_{k,n}(0) = n \log \{1 + U_n(\lambda)\},
+$$
+
+where $U_n(\lambda)=N_n(\lambda)/D_n(\lambda)$ and
+
+$$
+N_n(\lambda) = \sum_{s=1}^K \frac{\lambda \mu_{s,n}}{1 + \lambda \mu_{s,n}} w_s^2, \quad D_n(\lambda) = \sum_{s=1}^K \frac{w_s^2}{1 + \lambda \mu_{s,n}} + \sum_{s=K+1}^{n-p} w_s^2.
+$$
+
+
+
 
 ## Asymptotic distribution of LRT and RLRT
-
-This section presents the asymptotic distributions of the $LRT_n$ and $RLRT_n$ statistics for testing the null hypotheses (2) and (4) respectively. Because the finite sample results in Section 2 depend essentially on the eigenvalues $\mu_{s,n}$ and $\xi_{s,n}$, we may expect to have a relationship between the asymptotic distributions of test statistics and the asymptotic behavior of these eigenvalues. The following theorem provides the formal description of this relationship.
-
-**Theorem 2.** Assume that hypothesis $H_0$ in expression (2) is true. Suppose that there is an $\alpha \geq 0$ so that for every $s$ the $K$ eigenvalues $\mu_{s,n}$ and $\xi_{s,n}$ of matrices $\Sigma^{1/2} Z^T P_0 Z \Sigma^{1/2}$ and $\Sigma^{1/2} Z^T Z \Sigma^{1/2}$ respectively satisfy $\lim_{n \to \infty} n^{-\alpha} \mu_{s,n} = \mu_s$ and $\lim_{n \to \infty} n^{-\alpha} \xi_{s,n} = \xi_s$, where not all $\xi_s$ are 0. Then
-
-$$
-LRT_n \Rightarrow \sum_{s=1}^q u_s^2 + \sup_{d \geq 0} \{LRT_\infty(d)\},
-$$
-
-where $\Rightarrow$ denotes convergence in distribution.
-
-where the two terms in the asymptotic distribution are independent, $u_s$, $s$ are IID $N(0,1)$, and
-
-$$
-LRT_\infty(d) = \sum_{s=1}^K \frac{d \mu_s}{1 + d \mu_s} w_s^2 - \sum_{s=1}^K \log(1 + d \xi_s).
-$$
-
-Here `$\Rightarrow$` denotes weak convergence. The proof of this result is based on the weak convergence of the profile LRT in the space $C[0, \infty)$ of continuous functions on $[0, \infty)$ and a continuous mapping theorem. The first part of the asymptotic distribution is a $\chi^2$-distribution corresponding to testing for $q$ fixed effects and the second part corresponds to testing for $\sigma_b^2 = 0$. 
 
 Asymptotic theory for a null hypothesis on the boundary of the parameter space developed for IID data suggests the asymptotic result
 
 $$
-LRT_n \Rightarrow \sum_{s=1}^q u_s^2 + U^2,
+LRT_n \Rightarrow U^2_+,
 $$
 
-where $U^2$ represents some asymptotically chi-squared distributed random variable.
+where $U$ is an $N(0,1)$ random variable and $U^2_+ = U^2 I(U>0)$ with $I(\cdot)$ the indicator function. The distribution of $U^2_+$ is a $0.5 \chi^2_0:0.5 \chi^2_1$ mixture between a $\chi^2_0$- (Dirac distribution at 0) and a $\chi^2_1$-distribution.
 
-Under the same assumptions as in theorem 2, if the null hypothesis $H_0$ in equation (4) is true then
+In contrast, Crainiceanu and Ruppert described a relationship between the asymptotic distributions of test statistics and the asymptotic behavior of the eigenvalues $\mu_{s,n}$ and $\xi_{s,n}$, which is provided in Theorem 2. 
+This aymptotic distribution is generally different from the $0.5 \chi^2_0:0.5 \chi^2_1$ mixture, and differences can be severe.
 
-$$
-RLRT_n \Rightarrow \sup_{d \geq 0} \{ RLRT_{\infty}(d) \},
-$$
-
-where
+**Theorem 2.** Assume that hypothesis $H_0$ in expression (2) is true. Suppose that there is an $\alpha \geq 0$ so that for every $s$ the $K$ eigenvalues $\mu_{s,n}$ and $\xi_{s,n}$ of matrices $\Sigma^{1/2} Z' P_0 Z \Sigma^{1/2}$ and $\Sigma^{1/2} Z' Z \Sigma^{1/2}$ respectively satisfy $\lim_{n \to \infty} (n^{-\alpha} \mu_{s,n}) = \mu_s$ and $\lim_{n \to \infty} n^{-\alpha} \xi_{s,n} = \xi_s$, where not all $\xi_s$ are 0. Then
 
 $$
-RLRT_{\infty}(d) = \sum_{s=1}^K \frac{d \mu_s}{1 + d \mu_s} w_s^2 - \sum_{s=1}^K \log(1 + d \mu_s).
+LRT_n \Rightarrow \sup_{d \geq 0} \{LRT_\infty(d)\}
+= \sup_{d \geq 0} \left\{ \sum_{s=1}^K \frac{d \mu_s}{1 + d \mu_s} w_s^2 - \sum_{s=1}^K \log(1 + d \xi_s) \right\},
 $$
 
-If $q = 0$, then the LRT and RLRT statistics have probability mass at 0. Crainicceanu, Ruppert and Vogelsang (2003) showed that this mass can be very large for $LRT_{\infty}$ and $RLRT_{\infty}$ and is equal to the null probability that $LRT_{\infty}(\cdot)$ and $RLRT_{\infty}(\cdot)$ have a global maximum at 0. The latter is well approximated by the null probability of having a local maximum at $\lambda = 0$. The first-order conditions for a local maximum at $d = 0$ are
+where $\Rightarrow$ denotes weak convergence. 
+
+Under the same assumptions as in theorem 2, if $H_0: \sigma_b^2 = 0\ (\lambda = 0)$ is true then
 
 $$
-\left. \frac{\partial LRT_{\infty}(d)}{\partial d} \right|_{d=0} \leq 0
+RLRT_n \Rightarrow \sup_{d \geq 0} \{ RLRT_{\infty}(d) \} = \sup_{d \geq 0} \left\{ \sum_{s=1}^K \frac{d \mu_s}{1 + d \mu_s} w_s^2 - \sum_{s=1}^K \log(1 + d \mu_s) \right\}.
 $$
 
-or
+
+When $q = 0$, LRT and RLRT statistics have probability mass at 0. Crainicceanu, Ruppert and Vogelsang (2003) showed that this mass can be very large for $LRT_{\infty}$ and $RLRT_{\infty}$ and is equal to the null probability that $LRT_{\infty}(\cdot)$ and $RLRT_{\infty}(\cdot)$ have a global maximum at 0. The latter is well approximated by the null probability of having a local maximum at $\lambda = 0$. 
+
+The probability of having a local maximum at $d = 0$ for $LRT_{\infty}(\cdot)$ or $RLRT_{\infty}(\cdot)$ is
 
 $$
-\left. \frac{\partial RLRT_{\infty}(d)}{\partial d} \right|_{d=0} \leq 0.
+\text{pr} \left( \sum_{s=1}^K \mu_s w_s^2 \leq \sum_{s=1}^K \xi_s \right) \ or \
+\text{pr} \left( \sum_{s=1}^K \mu_s w_s^2 \leq \sum_{s=1}^K \mu_s \right),
 $$
 
-Therefore, the probability of having a local maximum at $d = 0$ for $LRT_{\infty}(\cdot)$ or $RLRT_{\infty}(\cdot)$ is
+where $w_s$ are IID $N(0,1)$ random variables.
+
+***Proof of Theorem 2***
+
+We continue to use notations from the proof of theorem 1. $LRT_n = \sup_{\lambda \geq 0} LRT_n(\lambda)$ where
 
 $$
-\text{pr} \left( \sum_{s=1}^K \mu_s w_s^2 \leq \sum_{s=1}^K \xi_s \right).
+LRT_n(\lambda) = n \log \{1 + U_n(\lambda) \} - \sum_{s=1}^K \log(1 + \lambda \xi_{s,n}),
 $$
 
-### Proof of Theorem 2
-
-We continue to use notations from the proof of theorem 1. For $R(x) = \log(1+x) - x$, $\lim_{x \to 0} R(x)/x = 0$ and $\lim_{x \to 0} R(x)/x^2 = -1/2$. Using the Taylor expansion around 0, $\log(1+x) = x + R(x)$ and taking into account that $\sum_{s=K+1}^n w_s^2/n$ converges almost surely to 1 one obtains
+Denote now by $f_n(d) = n \log \{ 1 + U_n(n^{-\alpha}d) \} - \sum_{s=1}^K \log(1 + d n^{-\alpha}\xi_{s,n})$ and we will show that
 
 $$
-n \log \left( 1 + \frac{\sum_{s=1}^q u_s^2}{\sum_{s=1}^{n-p} w_s^2} \right) = \sum_{s=1}^q u_s^2 + V_n ,
-$$
-
-where $V_n$ converges almost surely to 0. Denoting by $W_q = \sum_{s=1}^q u_s^2$ one obtains $LRT_n = \sup_{\lambda \geq 0} LRT_n(\lambda)$ where
-
-$$
-LRT_n(\lambda) = n \log \left(1 + U_n(\lambda)\right) - \sum_{s=1}^K \log(1 + \lambda \xi_{s,n}) + W_q + V_n ,
-$$
-
-where $U_n(\lambda)$ is independent of $W_q$, and $V_n$ converges almost surely to 0. Denote now by $f_n(d) = n \log \left( 1 + U_n(n^{-\alpha}d) \right) - \sum_{s=1}^K \log(1 + d n^{-\alpha}\xi_{s,n}) + W_q$ and we will show that
-
-$$
-\sup_{d \geq 0} f_n(d) \geq \sup_{d \geq 0} LRT_{\infty}(d) + W_q .
+\sup_{d \geq 0} f_n(d) \Rightarrow \sup_{d \geq 0} LRT_{\infty}(d).
 $$
 
 This proof consists of two steps:
 
-1. Prove that $f_n(d)$ converges weakly to $LRT_{\infty}(\cdot) + W_q$ on the space $C[0, \infty)$ of continuous functions with support [0, $\infty$).
+1. Prove that $f_n(\cdot)$ converges weakly to $LRT_{\infty}(\cdot)$ on the space $\mathcal{C}[0, \infty)$ of continuous functions with support [0, $\infty$).
 2. Prove that a Continuous Mapping Theorem type result holds for the $\sup_{d \geq 0} f_n(d)$.
 
-We show the weak convergence for any $C[0,M]$. Denote $f(d) = LRT_{\infty}(d) + W_q$, $n^{-\alpha}u_n = d$, $n^{-\alpha}\xi_{s,n} = \xi_{s,n}^{\alpha}$, etc. We establish the finite dimensional convergence of $f_n(d) \to f(d)$ and then we prove that $f_n(d)$ is a tight sequence in $C[0,M]$. Note that finite-dimensional convergence and tightness are sufficient to establish the convergence in $C[0,M]$.
+We show the weak convergence for any $\mathcal{C}[0,M]$. Denote $f(d) = LRT_{\infty}(d)$, $\eta_{s,n} = n^{-\alpha}\mu_{s,n}$, $\zeta_{s,n} = n^{-\alpha}\xi_{s,n}$, etc.
+Note that $\lim _{n\rightarrow \infty}\eta_{s,n}=\mu_s$, and $\lim _{n\rightarrow \infty}\zeta_{s,n}=\xi_s$.
+We first establish the finite dimensional convergence of $f_n(d)$ to $f(d)$ and then we prove that $f_n(d)$ is a tight sequence in $\mathcal{C}[0,M]$.
 
 To show finite dimensional convergence it is sufficient to show that for a fixed $d$ the convergence is almost sure. Note that
 
 $$
-n \log \left( 1 + U_n(n^{-\alpha}d) \right) = nU_n(d) + nR(n^{-\alpha}d),
+n \log \{ 1 + U_n(n^{-\alpha}d) \} = nU_n(n^{-\alpha}d) + nR(n^{-\alpha}d),
 $$
 
 where $R(\cdot)$, $U_n(\cdot)$, $N_n(\cdot)$ and $D_n(\cdot)$ were defined earlier. It follows immediately that almost surely
 
 $$
-\lim_{n \to \infty} nU_n(n^{-\alpha}d) = K \sum_{s=1}^K \frac{d \mu_s}{1 + d \mu_s} w_s^2.
+\lim_{n \to \infty} nU_n(n^{-\alpha}d) =  \sum_{s=1}^K \frac{d \mu_s}{1 + d \mu_s} w_s^2.
 $$
 
-Because $nR(U_n(n^{-\alpha}d)) = (nU_n(n^{-\alpha}d)) \times R(U_n(n^{-\alpha}d)/U_n(n^{-\alpha}d))$, it follows that $nR(U_n(n^{-\alpha}d))$ converges to zero almost surely ($\lim_{x \to 0} R(x)/x = 0$). Note that $\lim_{x \to 0} \log(1 + x) = x$ ensures that $\log(1 + d \xi_{s,n}^{\alpha})$ also converges to zero for every fixed $d$. We proved that, for every fixed $d$, $f_n(d)$ converges almost surely to $LRT_{\infty}(d) + W_q$.
+Because $nR\{U_n(n^{-\alpha}d)\} = \{nU_n(n^{-\alpha}d)\}  \{R(U_n(n^{-\alpha}d)/U_n(n^{-\alpha}d)\}$, it follows that $nR(U_n(n^{-\alpha}d))$ converges to zero almost surely ($\lim_{x \to 0} R(x)/x = 0$). 
+Note that $\lim_{n\rightarrow \infty} \sum^K_{s=1} \log(1+d\zeta_{s,n}) = \sum^K_{s=1} \log(1+d\xi_s)$ for every fixed $d$.
 
-To show that $f_n(d)$ form a tight sequence it is sufficient to show that for every $\epsilon > 0$ and strictly positive, there exist $\delta = \delta(\epsilon), 0 < \delta < 1$ and $n_0 = n_0(\epsilon, \delta)$ such that for $n \geq n_0$
+To show that $f_n(d)$ form a tight sequence it is sufficient to show that for every $\epsilon$ and $\eta$ and strictly positive, there exist $\delta = \delta(\epsilon, \eta), 0 < \delta < 1$ and $n_0 = n_0(\epsilon, \delta)$ such that for $n \geq n_0$
 
 $$
-\frac{1}{\delta} P \left( \sup_{|u-s| < \delta} |f_n(u) - f_n(t)| \geq \epsilon \right) < \eta.
+\frac{1}{\delta} P \left( \sup_{t \le u \le t+\delta} |f_n(u) - f_n(t)| \geq \epsilon \right) < \eta.
 $$
 
 Observe first that
 
 $$
-|f_n(u) - f_n(t)| \leq n \log \left( \frac{D_n(n^{-\alpha}t)}{D_n(n^{-\alpha}u)} \right) + \sum_{s=1}^K \left| \log \left( 1 + u \xi_{s,n} \right) - \log \left( 1 + t \xi_{s,n} \right) \right|.
+|f_n(u) - f_n(t)| \leq n \log \left\{ \frac{D_n(n^{-\alpha}t)}{D_n(n^{-\alpha}u)} \right\} + \sum_{s=1}^K  \log \frac{ 1 + u \zeta_{s,n}}{1 + t \zeta_{s,n}} .
 $$
 
 And because $\log(1 + x) < x$ for every $x > 0$ we obtain the following inequalities
 
 $$
-\log \left( \frac{D_n(n^{-\alpha}t)}{D_n(n^{-\alpha}u)} \right) \leq (s-t)C \sum_{s=K+1}^{n-p} w_s^2,
+\log \left\{ \frac{D_n(n^{-\alpha}t)}{D_n(n^{-\alpha}u)} \right\}
+\leq \frac{D_n(n^{-\alpha}t) - D_n(n^{-\alpha}u)}{D_n(n^{-\alpha}u)}
+\leq (s-t)C \frac{\sum_{s=1}^{K} w_s^2}{\sum_{s=K+1}^{n-p} w_s^2},
 $$
 
-where $C > 0$ is a constant so that $n \xi_{s,n}(n-p-K) \leq C$ for every $s$ and $n$. It follows that the following inequality holds
+where $C > 0$ is a constant so that $n \zeta_{s,n}/(n-p-K) \leq C$ for every $s$ and $n$. It follows that the following inequality holds
 
 $$
-n \log \left( \frac{D_n(n^{-\alpha}t)}{D_n(n^{-\alpha}u)} \right) \leq (u-t)CK F_{K,n},
+n \log \left\{ \frac{D_n(n^{-\alpha}t)}{D_n(n^{-\alpha}u)} \right\} \leq (u-t)CK F_{K,n},
 $$
 
 where $F_{K,n}$ is a random variable with an $F$ distribution with $(K,n-p-K)$ degrees of freedom. Similarly,
 
 $$
-\sum_{s=1}^K \left| \log \left( 1 + u \xi_{s,n} \right) - \log \left( 1 + t \xi_{s,n} \right) \right| \leq (u-t)CK.
+\sum_{s=1}^K \log \left(\frac { 1 + u \zeta_{s,n}}{ 1 + t \zeta_{s,n} } \right) \leq (u-t)CK.
 $$
 
 We conclude that
 
 $$
-P \left( \sup_{|u-s| < \delta} |f_n(u) - f_n(t)| \geq \epsilon \right) \leq P \left( F_{K,n} > C \delta^{-1} \right),
+P \left\{ \sup_{t \le u \le t+\delta} |f_n(u) - f_n(t)| \geq \epsilon \right\} \leq P \left\{ F_{K,n} \ge \epsilon(C K\delta)^{-1} -1 \right\},
 $$
 
-which bounds the probability as required.
-
-It is sufficient to find $\delta, n_0$ such that for every $n \geq n_0$ the c.d.f. $H_{K,n}$ of $F_{K,n}$ satisfies
+and it is sufficient to find $\delta, n_0$ such that for every $n \geq n_0$ the c.d.f. $H_{K,n}$ of $F_{K,n}$ satisfies
 
 $$
-1 - H_{K,n} \left( \frac{\epsilon}{C \delta^{-1}} - 1 \right) \leq \eta \delta.
+1 - H_{K,n} \left( \frac{\epsilon}{CK \delta} - 1 \right) \leq \eta \delta. \tag{5}
 $$
 
-If $H_K$ is the c.d.f. of a $\chi^2$ distribution with $K$ degrees of freedom, then for every $n$, $\lim_{n \to \infty} H_{K,n}(x) = H_K(x)$. Because (using for example l'Hospital rule and the pdf of a $\chi^2$ distribution with $K$ degrees of freedom)
+If $H_K$ is the c.d.f. of a $\chi^2$ distribution with $K$ degrees of freedom, then for every $x$, $\lim_{n \to \infty} H_{K,n}(x) = H_K(K_x)$. Because (using for example l'Hospital rule and the pdf of a $\chi^2$ distribution with $K$ degrees of freedom)
 
 $$
-\lim_{x \to \infty} \left[ 1 - H_K \left( \frac{\epsilon}{C} - K \right) \right] \left( \frac{n}{2} \right)^{\frac{1}{2}} = 0,
+\lim_{\delta \downarrow 0} \left\{ 1 - H_K \left( \frac{\epsilon}{C\delta} - K \right) \right\} /\left\{ \frac{\eta\delta}{2} \right\} = 0,
 $$
 
-one can find $\delta = \delta(\eta), \delta < 1$ with $\epsilon/C \delta^{-1} - K > 0$ such that $1 - H_K(\epsilon/C \delta^{-1} - K) \leq \sqrt{\eta} \delta / 2$. Because of the convergence of $H_{K,n}$ to $H_K$, one can find $n_0 = n_0(\eta, \delta)$ so that for $n \geq n_0$ the following inequality holds
+one can find $\delta = \delta(\epsilon,\eta), \delta < 1$ with $\epsilon/C \delta - K > 0$ such that $1 - H_K(\epsilon/C \delta - K) \leq \eta \delta / 2$. Because of the convergence of $H_{K,n}$ to $H_K$, one can find $n_0 = n_0(\epsilon, \eta)$ so that for $n \geq n_0$ the following inequality holds
 
 $$
-\left| H_{K,n} \left( \frac{\epsilon}{C \delta^{-1}} - K \right) - H_K \left( \frac{\epsilon}{C \delta^{-1}} - K \right) \right| \leq \frac{\sqrt{\eta} \delta}{2},
+\left| H_{K,n} \left( \frac{\epsilon}{C \delta} - K \right) - H_K \left( \frac{\epsilon}{C \delta} - K \right) \right| \leq \frac{\eta \delta}{2},
 $$
 
-which finishes the proof of the inequality in equation (2). We conclude that $f_n(d)$ converges weakly to $f(d)$ on $C[0, M]$ for each $M$, and therefore on $C[0, \infty)$.
+which finishes the proof of the inequality in equation (5). We conclude that $f_n(d)$ converges weakly to $f(d)$ on $\mathcal{C}[0, M]$ for each $M$, and therefore on $\mathcal{C}[0, \infty)$.
 
-We want to show now that $\sup_{d \geq 0} f_n(d) \geq \sup_{d \geq 0} f(d)$. First we find a random variable $T_{K,n}$ such that
-
-$$
-\sup_{d \geq 0} f_n(d) = \max_{d \in [0, M_n]} f_n(d),
-$$
-
-where $M_n = \frac{1}{m} T_{K,n}$ and $m > 0$ is chosen so that $d \geq n$ for all $s$ and $n$. Hence
+We want to show now that $\sup_{d \geq 0} f_n(d) \Rightarrow \sup_{d \geq 0} f(d)$. First we find a random variable $T_{K,n}$ such that
 
 $$
-f_n(d) \leq nK - K \log(1 + dm) + W_q.
+\sup_{d \geq 0} f_n(d) = \max_{d \in \left[ 0, T_{K,n} \right]} f_n(d).
+$$
+
+Note first that $f_n(d) = W_q$ for every $n$. Also, using again the inequality $\log(1+x) \le x$ for $x \ge 0$ it is easy to prove that
+
+$$
+f_n(d) \le n \frac {\sum^K_{s=1} w_s^2}{\sum^{n-p}_{s= K+1}w_s^2}-K\log(1+dm) = \frac {nK}{n-p-K}F_{K,n} - K\log(1+dm)
 $$
 
 Denote by
 
 $$
-T_{K,n} = \frac{1}{m} \left( \exp \left( \frac{n}{n - p - K} F_{K,n} \right) - 1 \right),
+T_{K,n} = \frac{1}{m} \left\{ \exp \left( \frac{n}{n - p - K} F_{K,n} \right) - 1 \right\},
 $$
 
-and observe that for $d > T_{K,n}$ we have $f_n(d) < W_q$ which shows that $T_{K,n}$ has the desired property. Observe now that for every $M > 0$ and for every $t > 0$
+and observe that for $d > T_{K,n}$ we have $f_n(d) < W_q$ which shows that $T_{K,n}$ has the desired property. Observe now that for every $M > 0$ and for every $t \ge 0$
 
 $$
-P \left( \sup_{d \geq 0} f_n(d) \leq t \right) \leq P \left( \max_{d \in [0,M]} f_n(d) \leq t \right).
+\text{pr} \left\{ \sup_{d \geq 0} f_n(d) \leq t \right\} \leq \text{pr} \left\{ \max_{d \in [0,M]} f_n(d) \leq t \right\}.
 $$
 
 Taking lim sup for $n \to \infty$ one obtains
 
 $$
-\limsup_{n \to \infty} P \left( \sup_{d \geq 0} f_n(d) \leq t \right) \leq \limsup_{n \to \infty} P \left( \max_{d \in [0,M]} f_n(d) \leq t \right).
+\limsup_{n \to \infty} \text{pr} \left\{ \sup_{d \geq 0} f_n(d) \leq t \right\} \leq \limsup_{n \to \infty} \text{pr} \left\{ \max_{d \in [0,M]} f_n(d) \leq t \right\}.
 $$
 
-Because $f_n(d)$ on $C[0, M]$ and by extension on $C[0, \infty)$ one can apply the Continuous Mapping Theorem for the right hand side of the inequality and we obtain
+Because $f_n(d) \Rightarrow f(d)$ on $\mathcal{C}[0, M]$ and by extension on $\mathcal{C}[0, \infty)$ one can apply the Continuous Mapping Theorem for the right hand side of the inequality and we obtain
 
 $$
-\lim_{n \to \infty} P \left( \max_{d \in [0,M]} f_n(d) \leq t \right) = P \left( \max_{d \in [0,M]} f(d) \leq t \right).
+\lim_{n \to \infty} \text{pr} \left\{ \max_{d \in [0,M]} f_n(d) \leq t \right\} = \text{pr} \left\{ \max_{d \in [0,M]} f(d) \leq t \right\}. \tag{6}
 $$
 
-Using that for any two events $A$ and $B$, $P(A \cap B) = P(A) - P(A^c \cap B)$, we obtain the following sequence of relations:
+Using that for any two events $A$ and $B$, $P(A \cap B) \ge P(A) - P(B^C)$, we obtain the following sequence of relations:
 
 $$
-P \left(\sup_{d > 0} f_n(d) \leq t \right) \geq P \left(\sup_{d > 0} f_n(d) \leq t, T_{K,n} < M \right) = P \left(\max_{d \in [0, M]} f_n(d) \leq t, T_{K,n} < M \right) \geq P \left(\max_{d \in [0, M]} f_n(d) \leq t \right) - P(T_{K,n} \geq M),
+\begin{aligned}
+\text{pr} \left\{ \sup_{d \ge 0} f_n(d) \leq t \right\}
+&\geq \text{pr} \left\{ \sup_{d > 0} f_n(d) \leq t, T_{K,n} < M \right\} \\
+&= \text{pr} \left\{ \max_{d \in [0, M]} f_n(d) \leq t, T_{K,n} < M \right\} \\
+&\geq \text{pr} \left\{ \max_{d \in [0, M]} f_n(d) \leq t \right\} - \text{pr}\left\{T_{K,n} \geq M\right\},
+\end{aligned}
 $$
 
 Taking the limit when $n \to \infty$ in the first and last expressions we obtain:
 
 $$
-\liminf_{n \to \infty} P \left( \sup_{d > 0} f_n(d) \leq t \right) \geq P \left( \sup_{d > 0} f(d) \leq t \right) - \lim_{n \to \infty} P(T_{K,n} \geq M),
+\liminf_{n \to \infty} \text{pr} \left( \sup_{d \ge 0} f_n(d) \leq t \right) \geq \text{pr} \left\{ \sup_{d \in [0,M]} f(d) \leq t \right\} - \text{pr}(T_K \geq M),
 $$
 
-where we used equation (3) and $T_{K} = \exp \left( \sum_{s=K+1}^{n-p} w_s^2 / K \right) - 1 / M$. Consider now a sequence of integers $M \to \infty$. Then $\lim_{M \to \infty} P(T_{K} \geq M) = 0$. Therefore if we prove that:
+where we used equation (6) and $T_{K} = \left\{\exp \left( \sum_{s=1}^{K} w_s^2 / K\right) - 1\right\} /m$. Consider now a sequence of integers $M \to \infty$. Then $\lim_{M \to \infty} \text{pr}(T_{K} \geq M) = 0$. Therefore if we prove that:
 
 $$
-\lim_{M \to \infty} P \left( \max_{d \in [0, M]} f_n(d) \leq t \right) = P \left( \sup_{d > 0} f(d) \leq t \right),
+\lim_{M \to \infty} \text{pr} \left\{ \max_{d \in [0, M]} f_n(d) \leq t \right\} = \text{pr} \left\{ \sup_{d \ge 0} f(d) \leq t \right\},
 $$
 
-then it follows that $\lim_{n \to \infty} P \left( \sup_{d > 0} f_n(d) \leq t \right)$ exists and:
+then it follows that $\lim_{n \to \infty} \text{pr} \left( \sup_{d > 0} f_n(d) \leq t \right)$ exists and:
 
 $$
-\lim_{n \to \infty} P \left( \sup_{d > 0} f_n(d) \leq t \right) = P \left( \sup_{d > 0} f(d) \leq t \right),
+\lim_{n \to \infty} \text{pr} \left\{ \sup_{d \ge 0} f_n(d) \leq t \right\} = \text{pr} \left\{ \sup_{d > 0} f(d) \leq t \right\},
 $$
 
 proving that:
 
 $$
-\sup_{d > 0} f_n(d) = \sup_{d > 0} f(d).
+\sup_{d \ge 0} f_n(d) \Rightarrow \sup_{d \ge 0} f(d).
 $$
 
-Denote by $A_M = \{ \max_{d \in [0, M]} f(d) \leq t \}$. Then $A_M \supset A_{M+1}$ and $\lim_{M \to \infty} P(A_M) = P \left( \sup_{d > 0} f(d) \leq t \right)$. But $\bigcap_{M=1}^{\infty} A_M = \{ \sup_{d > 0} f(d) \leq t \}$ which ends the proof of equation (4). Observe now that:
+Now that
 
 $$
-LRT_n = \sup_{d > 0} LRT_n(d) = \sup_{d > 0} f_n(d) + V_n.
+LRT_n \Rightarrow \sup_{d\ge0}f(d) = \sup_{d\ge0}LRT_\infty(d).
 $$
-
-Because $V_n$ converges almost surely to 0 it follows that:
-
-$$
-LRT_n = \sup_{d > 0} f_n(d) = \sup_{d > 0} LRT_n(d) + W_q.
-$$
-
-## Conclusion
-
-
 
 # Proofs of Lemma 3, Theorem 1, and Corollary 1
 
@@ -892,25 +851,22 @@ $$
 
 *Step 3*: independently of step 1, simulate $X_{n,K,p} = \sum^{n-p}_{s=K+1} w_s^2$ with a $\chi^2_{n-p-K}$-distribution.
 
-*Step 4*: independently of steps 1 and 2, simulate $X_q = \sum^q_{s=1} u_s^2$ with a $\chi^2_q$-distribution.
-
-*Step 5*: for every grid point $\lambda_i$ compute
+*Step 4*: for every grid point $\lambda_i$ compute
 
 $$\begin{gathered}
 N_n(\lambda_i) = \sum^K_{s=1} \frac{\lambda_i \mu_{s,n}}{1+\lambda_i \mu_{s,n}} w_s^2 \\
 D_n(\lambda_i) = \sum^K_{s=1} \frac{w_s^2}{1+\lambda_i \mu_{s,n}} w_s^2 + X_{n,K,p} \\
 \end{gathered}$$
 
-*Step 6*: determine $\lambda_{max}$ which maximizes $f_n(\lambda_i)$ over $\lambda_1$, ..., $\lambda_m$.
+*Step 5*: determine $\lambda_{max}$ which maximizes $f_n(\lambda_i)$ over $\lambda_1$, ..., $\lambda_m$.
 
-*Step 7*: compute 
+*Step 6*: compute 
 
-$$LRT_n = f_n(\lambda_{max}) + n\log (1+ \frac{X_q}{S_K + X_{n,K,p}})$$
+$$LRT_n = f_n(\lambda_{max})$$
 
-*Step 8*: repeat steps 2-7 until the desired number of simulations is achieved.
+*Step 7*: repeat steps 2-6 until the desired number of simulations is achieved.
 
-
-
+# 
 
 
 # Conclusion
