@@ -422,9 +422,48 @@ $$
 LRT_n \Rightarrow \sup_{d\ge0}f(d) = \sup_{d\ge0}LRT_\infty(d).
 $$
 
-# Proofs of Lemma 3, Theorem 1, and Corollary 1
+# Proofs of Lemma 3, Theorem 1, and Corollary 1 - On asymptotic distributions of several test statistics for familial relatedness in linear mixed models
 
-Before we begin, in this scenario, our null hypothesis is $\lambda = 0$ where $\lambda$ is the effect size of familial relatedness (FR) and the alternative is $\lambda > 0$.
+In testing for the familial relatedness (FR) effect, it will be helpful to understand the test statistic and the study population from which it is gathered. Essentially, we are looking at the phenotypes of groups of individuals or families pulled from a population. We use the people and the observed phenotypes to construct the following linear mixed model:
+
+$$
+Y = X\beta + \nu + \varepsilon
+$$
+
+Where $Y$ is an $n \times 1$ vector of observed phenotypic values, $X$ is a $n\times p$ design matrix of covariates, $\beta$ is a $p \times 1$vector of the fixed effects for the covariates, $\nu$ is distributed $N(0, \sigma_a^2\Sigma)$ and is a $n \times 1$ random vector for the FR effects. 
+
+Per the paper we were referencing, we can rewrite the linear model as:
+
+$$
+Y = X\beta + \sum_{j=1}^q a_j v_j + \varepsilon = X \beta + Za + \varepsilon
+$$
+
+With $Z = VS^{1/2} = (\zeta_1^{1/2}v_1, ..., \zeta_q^{1/2}v_q)$ and $ZZ^T = \Sigma$. Additionally, $a = (a_1, ..., a_q) \sim N(0, \sigma_a^2I_q)$ which allows the LMM to be of the dimension q and can usually grow as the sample size increases.
+
+$\Sigma$, the correlation matrix, can be written as $2 \Phi$ and can have a block structure where each block sub-matrix represents a family. This submatrix can take the form:
+
+$$
+2 \Phi_i = \begin{bmatrix}
+1 & 0 & 0.5 \\
+0 & 1 & 0.5 \\
+0.5 & 0.5 & 1
+\end{bmatrix}
+$$
+
+which is a family trio of two parents and one biological child. The eigen values can repeat themselves for however many families we are looking at, especially if the families are all the same size. 
+
+We test the effect of the FR effect by creating a ratio of $\sigma_a^2$ (the random effect of the FR effect) and $\sigma_e^2$ (the variance of the model residuals). The ratio is $\lambda = \frac{\sigma_a^2}{\sigma_e^2}$ and is the effect size of FR. We will focus on the hypothesis test: 
+
+$$
+\begin{split}
+H_0 &: \lambda = 0 \\
+H_a &: \lambda > 0
+\end{split}
+$$
+
+or that the effect size of FR is 0 or greater than 0. In this section we will look at the claims of the paper made in Lemma 3, Theorem 1, and Collary 1 about the asymptotic distributions of the MLE and REML estimators of $\lambda$ for the LRT and RLRT. 
+
+<!-- Before we begin, in this scenario, our null hypothesis is $\lambda = 0$ where $\lambda$ is the effect size of familial relatedness (FR) and the alternative is $\lambda > 0$. -->
 
 ## Lemma 3
 
